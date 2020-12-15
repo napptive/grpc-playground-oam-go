@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package playground_oam;
+option go_package = "github.com/napptive/grpc-playground-oam-go;grpc_playground_oam_go";
+
+// OAMMetadata with the metadata entries of an OAM component.
+message OAMMetadata {
+    // Entries associating key and value.
+    map<string, string> entries = 1;
+}
+
+// OAMComponentSpec with the spec of an OAM component.
+message OAMComponentSpec{
+    // Type of component
+    string type = 1;
+}
+
+// OAMComponent with the information of a component in the OAM spec.
+message OAMComponent{
+    // ApiVersion of the component.
+    string api_version = 1;
+    // Kind of component.
+    string kind = 2;
+    // Metadata associated with the component.
+    OAMMetadata metadata = 3;
+    // Spec associated with the component.
+    OAMComponentSpec spec = 4;
+}
