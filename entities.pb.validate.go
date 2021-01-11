@@ -186,7 +186,25 @@ func (m *Component) Validate() error {
 
 	// no validation rules for Kind
 
-	// no validation rules for Name
+	if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ComponentValidationError{
+				field:  "Metadata",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetSpec()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ComponentValidationError{
+				field:  "Spec",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	return nil
 }
@@ -244,6 +262,587 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ComponentValidationError{}
+
+// Validate checks the field values on ComponentSpec with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *ComponentSpec) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Type
+
+	if v, ok := interface{}(m.GetWorkload()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ComponentSpecValidationError{
+				field:  "Workload",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetSettings()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ComponentSpecValidationError{
+				field:  "Settings",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	for idx, item := range m.GetParameters() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ComponentSpecValidationError{
+					field:  fmt.Sprintf("Parameters[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ComponentSpecValidationError is the validation error returned by
+// ComponentSpec.Validate if the designated constraints aren't met.
+type ComponentSpecValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ComponentSpecValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ComponentSpecValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ComponentSpecValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ComponentSpecValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ComponentSpecValidationError) ErrorName() string { return "ComponentSpecValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ComponentSpecValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sComponentSpec.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ComponentSpecValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ComponentSpecValidationError{}
+
+// Validate checks the field values on WorkloadSpec with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *WorkloadSpec) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for OsType
+
+	for idx, item := range m.GetContainers() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return WorkloadSpecValidationError{
+					field:  fmt.Sprintf("Containers[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// WorkloadSpecValidationError is the validation error returned by
+// WorkloadSpec.Validate if the designated constraints aren't met.
+type WorkloadSpecValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e WorkloadSpecValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e WorkloadSpecValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e WorkloadSpecValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e WorkloadSpecValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e WorkloadSpecValidationError) ErrorName() string { return "WorkloadSpecValidationError" }
+
+// Error satisfies the builtin error interface
+func (e WorkloadSpecValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sWorkloadSpec.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = WorkloadSpecValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = WorkloadSpecValidationError{}
+
+// Validate checks the field values on Port with the rules defined in the proto
+// definition for this message. If any rules are violated, an error is returned.
+func (m *Port) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	// no validation rules for Value
+
+	return nil
+}
+
+// PortValidationError is the validation error returned by Port.Validate if the
+// designated constraints aren't met.
+type PortValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e PortValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e PortValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e PortValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e PortValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e PortValidationError) ErrorName() string { return "PortValidationError" }
+
+// Error satisfies the builtin error interface
+func (e PortValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sPort.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = PortValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = PortValidationError{}
+
+// Validate checks the field values on EnvironmentVariable with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *EnvironmentVariable) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	// no validation rules for Required
+
+	// no validation rules for Value
+
+	return nil
+}
+
+// EnvironmentVariableValidationError is the validation error returned by
+// EnvironmentVariable.Validate if the designated constraints aren't met.
+type EnvironmentVariableValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e EnvironmentVariableValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e EnvironmentVariableValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e EnvironmentVariableValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e EnvironmentVariableValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e EnvironmentVariableValidationError) ErrorName() string {
+	return "EnvironmentVariableValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e EnvironmentVariableValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sEnvironmentVariable.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = EnvironmentVariableValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = EnvironmentVariableValidationError{}
+
+// Validate checks the field values on Container with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Container) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	// no validation rules for Image
+
+	// no validation rules for ImagePullPolicy
+
+	for idx, item := range m.GetPorts() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ContainerValidationError{
+					field:  fmt.Sprintf("Ports[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetEnv() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ContainerValidationError{
+					field:  fmt.Sprintf("Env[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContainerValidationError is the validation error returned by
+// Container.Validate if the designated constraints aren't met.
+type ContainerValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ContainerValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ContainerValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ContainerValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ContainerValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ContainerValidationError) ErrorName() string { return "ContainerValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ContainerValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sContainer.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ContainerValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ContainerValidationError{}
+
+// Validate checks the field values on Parameter with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Parameter) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	// no validation rules for Required
+
+	return nil
+}
+
+// ParameterValidationError is the validation error returned by
+// Parameter.Validate if the designated constraints aren't met.
+type ParameterValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ParameterValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ParameterValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ParameterValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ParameterValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ParameterValidationError) ErrorName() string { return "ParameterValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ParameterValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sParameter.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ParameterValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ParameterValidationError{}
+
+// Validate checks the field values on Workload with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *Workload) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for ApiVersion
+
+	// no validation rules for Kind
+
+	if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return WorkloadValidationError{
+				field:  "Metadata",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetSpec()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return WorkloadValidationError{
+				field:  "Spec",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// WorkloadValidationError is the validation error returned by
+// Workload.Validate if the designated constraints aren't met.
+type WorkloadValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e WorkloadValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e WorkloadValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e WorkloadValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e WorkloadValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e WorkloadValidationError) ErrorName() string { return "WorkloadValidationError" }
+
+// Error satisfies the builtin error interface
+func (e WorkloadValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sWorkload.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = WorkloadValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = WorkloadValidationError{}
 
 // Validate checks the field values on TraitSpec with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.

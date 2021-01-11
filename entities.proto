@@ -34,14 +34,89 @@ message Metadata{
 // Components
 //
 
-// Component as defined in the OAM schematics.
-message Component {
+// Component with the information of a component in the OAM spec.
+message Component{
     // ApiVersion of the component.
     string api_version = 1;
     // Kind of component.
     string kind = 2;
-    // Name of the component.
-    string name = 3;
+    // Metadata associated with the component.
+    Metadata metadata = 3;
+    // Spec associated with the component.
+    ComponentSpec spec = 4;
+}
+
+// ComponentSpec with the spec of an OAM component.
+message ComponentSpec{
+    // Type of component
+    string type = 1;
+    // Workload of the component. This field is mutually exclusive with type and settings.
+    Workload workload = 2;
+    // Settings of the workload
+    WorkloadSpec settings = 3;
+    // Parameters with the component parameters
+    repeated Parameter parameters = 4;
+}
+
+// WorkloadSpec with the workloadSpec
+message WorkloadSpec {
+    string os_type = 1;
+    repeated Container containers = 2;
+}
+
+// Port message with the port specification
+message Port {
+    string name = 1;
+    uint32 value = 2;
+}
+
+// EnvironmentVariable message with the environment variable information
+message EnvironmentVariable {
+    // Name with the name of the variable
+    string name = 1;
+    // Required indicates if the variable must to be filled
+    bool required = 2;
+    // Value of the variable
+    string value = 3;
+}
+
+// Container with the container information
+message Container {
+    // name of the container
+    string name = 1;
+    // Image of the container
+    string image = 2;
+    // ImagePullPolicy
+    string image_pull_policy = 3;
+    // ports with the ports
+    repeated Port ports = 4;
+    // cmd with the command to execute the container
+    repeated string cmd = 5;
+    // env with a list of environment variables
+    repeated EnvironmentVariable env = 6;
+    // resources
+}
+
+// Parameter message with the parameter definition
+message Parameter {
+    // Name of the parameter
+    string name = 1;
+    // Required with a flag to indicate if the parameter is required or not
+    bool required = 2;
+    // FieldPaths with the paths where the parameter is applied
+    repeated string field_paths = 3;
+}
+
+// Workload with the information of a workload.
+message Workload {
+    // ApiVersion of the Workload.
+    string api_version = 1;
+    // Kind of component.
+    string kind = 2;
+    // Metadata associated with the workload.
+    Metadata metadata = 3;
+    // Spec with the workload specification
+    WorkloadSpec spec = 4;
 }
 
 //
