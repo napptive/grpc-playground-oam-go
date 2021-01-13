@@ -118,6 +118,8 @@ func (m *Metadata) Validate() error {
 
 	// no validation rules for Labels
 
+	// no validation rules for Uid
+
 	return nil
 }
 
@@ -174,6 +176,612 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = MetadataValidationError{}
+
+// Validate checks the field values on ComponentParameterValue with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ComponentParameterValue) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	// no validation rules for Value
+
+	return nil
+}
+
+// ComponentParameterValueValidationError is the validation error returned by
+// ComponentParameterValue.Validate if the designated constraints aren't met.
+type ComponentParameterValueValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ComponentParameterValueValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ComponentParameterValueValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ComponentParameterValueValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ComponentParameterValueValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ComponentParameterValueValidationError) ErrorName() string {
+	return "ComponentParameterValueValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ComponentParameterValueValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sComponentParameterValue.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ComponentParameterValueValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ComponentParameterValueValidationError{}
+
+// Validate checks the field values on ApplicationScopeReference with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ApplicationScopeReference) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for ApiVersion
+
+	// no validation rules for Kind
+
+	// no validation rules for Name
+
+	// no validation rules for Uid
+
+	return nil
+}
+
+// ApplicationScopeReferenceValidationError is the validation error returned by
+// ApplicationScopeReference.Validate if the designated constraints aren't met.
+type ApplicationScopeReferenceValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ApplicationScopeReferenceValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ApplicationScopeReferenceValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ApplicationScopeReferenceValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ApplicationScopeReferenceValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ApplicationScopeReferenceValidationError) ErrorName() string {
+	return "ApplicationScopeReferenceValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ApplicationScopeReferenceValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sApplicationScopeReference.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ApplicationScopeReferenceValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ApplicationScopeReferenceValidationError{}
+
+// Validate checks the field values on ApplicationScope with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *ApplicationScope) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetScopeRef()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ApplicationScopeValidationError{
+				field:  "ScopeRef",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApplicationScopeValidationError is the validation error returned by
+// ApplicationScope.Validate if the designated constraints aren't met.
+type ApplicationScopeValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ApplicationScopeValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ApplicationScopeValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ApplicationScopeValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ApplicationScopeValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ApplicationScopeValidationError) ErrorName() string { return "ApplicationScopeValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ApplicationScopeValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sApplicationScope.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ApplicationScopeValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ApplicationScopeValidationError{}
+
+// Validate checks the field values on ApplicationTrait with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *ApplicationTrait) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	if v, ok := interface{}(m.GetProperties()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ApplicationTraitValidationError{
+				field:  "Properties",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetTrait()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ApplicationTraitValidationError{
+				field:  "Trait",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApplicationTraitValidationError is the validation error returned by
+// ApplicationTrait.Validate if the designated constraints aren't met.
+type ApplicationTraitValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ApplicationTraitValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ApplicationTraitValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ApplicationTraitValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ApplicationTraitValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ApplicationTraitValidationError) ErrorName() string { return "ApplicationTraitValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ApplicationTraitValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sApplicationTrait.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ApplicationTraitValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ApplicationTraitValidationError{}
+
+// Validate checks the field values on ApplicationComponent with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ApplicationComponent) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for ComponentName
+
+	for idx, item := range m.GetParameterValues() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ApplicationComponentValidationError{
+					field:  fmt.Sprintf("ParameterValues[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	if v, ok := interface{}(m.GetInstance()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ApplicationComponentValidationError{
+				field:  "Instance",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	for idx, item := range m.GetScopes() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ApplicationComponentValidationError{
+					field:  fmt.Sprintf("Scopes[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	for idx, item := range m.GetTraits() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ApplicationComponentValidationError{
+					field:  fmt.Sprintf("Traits[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ApplicationComponentValidationError is the validation error returned by
+// ApplicationComponent.Validate if the designated constraints aren't met.
+type ApplicationComponentValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ApplicationComponentValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ApplicationComponentValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ApplicationComponentValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ApplicationComponentValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ApplicationComponentValidationError) ErrorName() string {
+	return "ApplicationComponentValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ApplicationComponentValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sApplicationComponent.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ApplicationComponentValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ApplicationComponentValidationError{}
+
+// Validate checks the field values on ApplicationConfigurationSpec with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ApplicationConfigurationSpec) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetComponents() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ApplicationConfigurationSpecValidationError{
+					field:  fmt.Sprintf("Components[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ApplicationConfigurationSpecValidationError is the validation error returned
+// by ApplicationConfigurationSpec.Validate if the designated constraints
+// aren't met.
+type ApplicationConfigurationSpecValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ApplicationConfigurationSpecValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ApplicationConfigurationSpecValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ApplicationConfigurationSpecValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ApplicationConfigurationSpecValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ApplicationConfigurationSpecValidationError) ErrorName() string {
+	return "ApplicationConfigurationSpecValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ApplicationConfigurationSpecValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sApplicationConfigurationSpec.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ApplicationConfigurationSpecValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ApplicationConfigurationSpecValidationError{}
+
+// Validate checks the field values on ApplicationConfiguration with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *ApplicationConfiguration) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for ApiVersion
+
+	// no validation rules for Kind
+
+	if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ApplicationConfigurationValidationError{
+				field:  "Metadata",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetSpec()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ApplicationConfigurationValidationError{
+				field:  "Spec",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// ApplicationConfigurationValidationError is the validation error returned by
+// ApplicationConfiguration.Validate if the designated constraints aren't met.
+type ApplicationConfigurationValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ApplicationConfigurationValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ApplicationConfigurationValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ApplicationConfigurationValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ApplicationConfigurationValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ApplicationConfigurationValidationError) ErrorName() string {
+	return "ApplicationConfigurationValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e ApplicationConfigurationValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sApplicationConfiguration.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ApplicationConfigurationValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ApplicationConfigurationValidationError{}
 
 // Validate checks the field values on Component with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
