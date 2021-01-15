@@ -147,7 +147,7 @@ message Port {
     string name = 1;
     // Value with the port number
     int32 value = 2;
-    // ContainerPOrt with the port in the container
+    // ContainerPort with the port in the container
     int32 container_port = 3;
     // Type port
     string type = 4;

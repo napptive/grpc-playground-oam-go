@@ -833,7 +833,7 @@ type Port struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// Value with the port number
 	Value int32 `protobuf:"varint,2,opt,name=value,proto3" json:"value,omitempty"`
-	// ContainerPOrt with the port in the container
+	// ContainerPort with the port in the container
 	ContainerPort int32 `protobuf:"varint,3,opt,name=container_port,json=containerPort,proto3" json:"container_port,omitempty"`
 	// Type port
 	Type string `protobuf:"bytes,4,opt,name=type,proto3" json:"type,omitempty"`
