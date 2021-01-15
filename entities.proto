@@ -143,11 +143,33 @@ message WorkloadSpec {
 
 // Port message with the port specification
 message Port {
+    // Name of the port
     string name = 1;
-    uint32 value = 2;
+    // Value with the port number
+    int32 value = 2;
+    // ContainerPOrt with the port in the container
+    int32 container_port = 3;
+    // Type port
+    string type = 4;
+}
+
+// FromValueEnv message to select a Secret or a configmap to populate the environment variables with.
+message FromValueEnv {
+    // name with the secret name
+    string name = 1;
+    // key with the key in the secret
+    string key = 2;
+}
+
+// FromSecretEnv message to select a ConfigMap to populate the environment variables with.
+message FromConfigEnv {
+    // ConfigMapKeyRef indicates the configmap used to get the env variable
+    FromValueEnv config_map_key_ref = 1;
 }
 
 // EnvironmentVariable message with the environment variable information
+// There are different ways to define environment variable.
+// Value, secret or configmap
 message EnvironmentVariable {
     // Name with the name of the variable
     string name = 1;
@@ -155,6 +177,10 @@ message EnvironmentVariable {
     bool required = 2;
     // Value of the variable
     string value = 3;
+    // FromSecret indicates the env takes from a secret
+    FromValueEnv from_secret = 4;
+    // valueFrom indicates where is the env information
+    FromConfigEnv value_from = 5;
 }
 
 // Container with the container information

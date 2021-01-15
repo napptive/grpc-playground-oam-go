@@ -1066,6 +1066,10 @@ func (m *Port) Validate() error {
 
 	// no validation rules for Value
 
+	// no validation rules for ContainerPort
+
+	// no validation rules for Type
+
 	return nil
 }
 
@@ -1123,6 +1127,150 @@ var _ interface {
 	ErrorName() string
 } = PortValidationError{}
 
+// Validate checks the field values on FromValueEnv with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *FromValueEnv) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Name
+
+	// no validation rules for Key
+
+	return nil
+}
+
+// FromValueEnvValidationError is the validation error returned by
+// FromValueEnv.Validate if the designated constraints aren't met.
+type FromValueEnvValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e FromValueEnvValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e FromValueEnvValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e FromValueEnvValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e FromValueEnvValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e FromValueEnvValidationError) ErrorName() string { return "FromValueEnvValidationError" }
+
+// Error satisfies the builtin error interface
+func (e FromValueEnvValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sFromValueEnv.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = FromValueEnvValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = FromValueEnvValidationError{}
+
+// Validate checks the field values on FromConfigEnv with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *FromConfigEnv) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetConfigMapKeyRef()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return FromConfigEnvValidationError{
+				field:  "ConfigMapKeyRef",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// FromConfigEnvValidationError is the validation error returned by
+// FromConfigEnv.Validate if the designated constraints aren't met.
+type FromConfigEnvValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e FromConfigEnvValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e FromConfigEnvValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e FromConfigEnvValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e FromConfigEnvValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e FromConfigEnvValidationError) ErrorName() string { return "FromConfigEnvValidationError" }
+
+// Error satisfies the builtin error interface
+func (e FromConfigEnvValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sFromConfigEnv.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = FromConfigEnvValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = FromConfigEnvValidationError{}
+
 // Validate checks the field values on EnvironmentVariable with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -1136,6 +1284,26 @@ func (m *EnvironmentVariable) Validate() error {
 	// no validation rules for Required
 
 	// no validation rules for Value
+
+	if v, ok := interface{}(m.GetFromSecret()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return EnvironmentVariableValidationError{
+				field:  "FromSecret",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetValueFrom()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return EnvironmentVariableValidationError{
+				field:  "ValueFrom",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	return nil
 }
