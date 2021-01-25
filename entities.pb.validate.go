@@ -560,14 +560,19 @@ func (m *ApplicationComponent) Validate() error {
 
 	// no validation rules for ComponentName
 
-	if v, ok := interface{}(m.GetParameterValues()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ApplicationComponentValidationError{
-				field:  "ParameterValues",
-				reason: "embedded message failed validation",
-				cause:  err,
+	for idx, item := range m.GetParameterValues() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ApplicationComponentValidationError{
+					field:  fmt.Sprintf("ParameterValues[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
+
 	}
 
 	if v, ok := interface{}(m.GetComponentSummary()).(interface{ Validate() error }); ok {
