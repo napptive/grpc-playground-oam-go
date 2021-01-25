@@ -74,14 +74,20 @@ message ApplicationTrait{
     google.protobuf.Struct trait = 3;
 }
 
+// ComponentSummary defines a summary of the component.
+message ComponentSummary {
+    // images with the images of all associated containers
+    repeated string images = 1;
+}
+
 // ApplicationComponent defines a component associated with an application configuration.
 message ApplicationComponent{
     // ComponentName specifies a component whose latest revision will be bind with ApplicationConfiguration. When the spec of the referenced component changes, ApplicationConfiguration will automatically migrate all trait affect from the prior revision to the new one. This is mutually exclusive with RevisionName.
     string component_name = 1;
     //ParameterValues specify values for the the specified component's parameters. Any parameter required by the component must be specified.
-    repeated ComponentParameterValue parameter_values = 2;
-    // Instance of the linked component
-    Component instance  = 3;
+    google.protobuf.Struct parameter_values = 2;
+    // ComponentSummary with the summary of the components
+    ComponentSummary component_summary  = 3;
     // Scopes in which the specified component should exist.
     repeated ApplicationScope scopes = 4;
     // Traits of the specified component.

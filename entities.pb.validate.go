@@ -485,6 +485,71 @@ var _ interface {
 	ErrorName() string
 } = ApplicationTraitValidationError{}
 
+// Validate checks the field values on ComponentSummary with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *ComponentSummary) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	return nil
+}
+
+// ComponentSummaryValidationError is the validation error returned by
+// ComponentSummary.Validate if the designated constraints aren't met.
+type ComponentSummaryValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ComponentSummaryValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ComponentSummaryValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ComponentSummaryValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ComponentSummaryValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ComponentSummaryValidationError) ErrorName() string { return "ComponentSummaryValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ComponentSummaryValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sComponentSummary.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ComponentSummaryValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ComponentSummaryValidationError{}
+
 // Validate checks the field values on ApplicationComponent with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
@@ -495,25 +560,20 @@ func (m *ApplicationComponent) Validate() error {
 
 	// no validation rules for ComponentName
 
-	for idx, item := range m.GetParameterValues() {
-		_, _ = idx, item
-
-		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
-			if err := v.Validate(); err != nil {
-				return ApplicationComponentValidationError{
-					field:  fmt.Sprintf("ParameterValues[%v]", idx),
-					reason: "embedded message failed validation",
-					cause:  err,
-				}
-			}
-		}
-
-	}
-
-	if v, ok := interface{}(m.GetInstance()).(interface{ Validate() error }); ok {
+	if v, ok := interface{}(m.GetParameterValues()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return ApplicationComponentValidationError{
-				field:  "Instance",
+				field:  "ParameterValues",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetComponentSummary()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ApplicationComponentValidationError{
+				field:  "ComponentSummary",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
