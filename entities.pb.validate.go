@@ -120,6 +120,8 @@ func (m *Metadata) Validate() error {
 
 	// no validation rules for Uid
 
+	// no validation rules for CreationTimestamp
+
 	return nil
 }
 

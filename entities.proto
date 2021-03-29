@@ -32,6 +32,9 @@ message Metadata{
     map<string, string> labels = 3;
     // UID is the unique in time and space value for this object. More info: http://kubernetes.io/docs/user-guide/identifiers#uids
     string uid = 4;
+    // CreationTimestamp with the server time when the object was created.
+    // It is represented in RFC3339 form and is in UTC.
+    string creation_timestamp = 5;
 }
 
 //
